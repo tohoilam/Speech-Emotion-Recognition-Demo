@@ -1,0 +1,35 @@
+[
+  {
+    "name": "[Exp 13] CNN Model B (IEMOCAP EmoDB 5E(M)) (Aug 3A) (S4 I2)",
+    "folderName": "Experiment13",
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
+    "splitDuration": 4,
+    "ignoreDuration": 2,
+    "transformByStft": false,
+    "hop_length": 512,
+    "win_length": 2048,
+    "n_mels": 128
+  },
+  {
+    "name": "[Exp 12] CNN Model B (IEMOCAP EmoDB 5E(M)) (Aug 2A) (S4 I2)",
+    "folderName": "Experiment12",
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
+    "splitDuration": 4,
+    "ignoreDuration": 2,
+    "transformByStft": false,
+    "hop_length": 512,
+    "win_length": 2048,
+    "n_mels": 128
+  },
+  {
+    "name": "[Exp IDK] CNN Model B (IEMOCAP EmoDB 5E(M)) (Aug 2A) (S8 I2) (Stft H512 W2048 M128)",
+    "folderName": "ExperimentIDK",
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
+    "splitDuration": 8,
+    "ignoreDuration": 2,
+    "transformByStft": true,
+    "hop_length": 512,
+    "win_length": 2048,
+    "n_mels": 128
+  }
+]
