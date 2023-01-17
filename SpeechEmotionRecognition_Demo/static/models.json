@@ -1,42 +1,9 @@
 [
   {
-    "name": "[Exp 13] CNN Model B (IEMOCAP EmoDB 5E(M)) (Aug 3A) (S4 I2)",
-    "folderName": "Experiment13.h5",
-    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
-    "splitDuration": 4,
-    "ignoreDuration": 2,
-    "transformByStft": false,
-    "hop_length": 512,
-    "win_length": 2048,
-    "n_mels": 128,
-    "timeShape": false,
-	  "isHMM": 0
-  },
-  {
-    "name": "[Exp 12] CNN Model B (IEMOCAP EmoDB 5E(M)) (Aug 2A) (S4 I2)",
-    "folderName": "Experiment12.h5",
-    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
-    "splitDuration": 4,
-    "ignoreDuration": 2,
-    "transformByStft": false,
-    "hop_length": 512,
-    "win_length": 2048,
-    "n_mels": 128,
-    "timeShape": false,
-	  "isHMM": 0
-  },
-  {
-    "name": "[Exp IDK] CNN Model B (IEMOCAP EmoDB 5E(M)) (Aug 2A) (S8 I2) (Stft H512 W2048 M128)",
-    "folderName": "ExperimentIDK.h5",
-    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
-    "splitDuration": 8,
-    "ignoreDuration": 2,
-    "transformByStft": true,
-    "hop_length": 512,
-    "win_length": 2048,
-    "n_mels": 128,
-    "timeShape": false,
-	  "isHMM": 0
+    "name": "Final HMM Model",
+    "folderName": "HMM_Final",
+    "labelsToInclude": ["Anger", "Happiness", "Neutral", "Sadness"],
+	  "isHMM": 1
   },
   {
     "name": "Best CNN Model",
@@ -52,7 +19,7 @@
 	  "isHMM": 0
   },
   {
-    "name": "Best CNN-LSTM Model",
+    "name": "Final Model (CNN-LSTM)",
     "folderName": "BestCnnLstmModel.h5",
     "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
     "splitDuration": 8,
@@ -65,7 +32,7 @@
 	  "isHMM": 0
   },
   {
-    "name": "Best CNN-LSTM Model (EmoDB)",
+    "name": "Final Model on EmoDB (Not effective)",
     "folderName": "BestCnnLstmEmoDBModel.h5",
     "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
     "splitDuration": 8,
@@ -76,11 +43,5 @@
     "n_mels": 128,
     "timeShape": false,
 	  "isHMM": 0
-  },
-  {
-    "name": "Hidden Markov Model with MultivariateGaussianDistribution (15*3 + 2 Features) (CMVN) (VP > 0.05)",
-    "folderName": "HMM_Final",
-    "labelsToInclude": ["Anger", "Happiness", "Neutral", "Sadness"],
-	  "isHMM": 1
   }
 ]
