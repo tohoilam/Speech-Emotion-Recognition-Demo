@@ -2,6 +2,7 @@ import os
 import numpy as np
 import tensorflow as tf
 from pydub import AudioSegment, effects
+from pydub.utils import mediainfo
 import librosa
 import librosa.display
 import joblib
@@ -14,7 +15,7 @@ import cv2
 
 
 class DataProcessing:
-  def __init__(self, labelsToInclude=[], splitDuration=8, ignoreDuration=1, transformByStft=False, hop_length=512, win_length=2048, n_mels=128):
+  def __init__(self, labelsToInclude=[], splitDuration=8, ignoreDuration=1, transformByStft=False, hop_length=512, win_length=2048, n_mels=128, timeShape=False):
     # Hyperparameter
     self.splitDuration = splitDuration
     self.ignoreDuration = ignoreDuration
@@ -22,6 +23,7 @@ class DataProcessing:
     self.hop_length = hop_length
     self.win_length = win_length
     self.n_mels = n_mels
+    self.timeShape = timeShape
     self.dimension = (256, 256)
     self.x_test = []
     self.sr = []
@@ -89,11 +91,18 @@ class DataProcessing:
           # Load Audio and x
           wav_path = os.path.join(dirname, filename)
           audio = AudioSegment.from_file(wav_path)
+          # info = mediainfo(wav_path)
+          
           if (audio.frame_rate != 16000):
             audio = audio.set_frame_rate(16000)
+          if (audio.channels != 1):
+            audio = audio.set_channels(1)
+            
           sr = audio.frame_rate
+          
           audio = effects.normalize(audio, headroom = 5.0) # TODO: Try other head room
           x = np.array(audio.get_array_of_samples(), dtype = 'float32')
+          # x = librosa.resample(x, orig_sr=audio.frame_rate, target_sr=16000)
           
           x_list.append(x)
           sr_list.append(sr)
@@ -190,6 +199,9 @@ class DataProcessing:
         # Force Resize Mel-Spectrogram using image
         mel_spec = cv2.resize(mel_spec, self.dimension, interpolation=cv2.INTER_CUBIC)
 
+      if (self.timeShape):
+        mel_spec = mel_spec.T
+
       x_images.append(mel_spec)
 
     x_images = [ x for x in x_images ]
@@ -225,10 +237,15 @@ class DataProcessing:
     # librosa.display.specshow(x, sr=sr, x_axis='time', y_axis='mel')
     # plt.colorbar(format='%+2.0f dB')
     # plt.savefig(filepath)
+    params = {"ytick.color" : "w",
+          "xtick.color" : "w",
+          "axes.labelcolor" : "w",
+          "axes.edgecolor" : "w"}
+    plt.rcParams.update(params)
     
     fig = plt.Figure()
     ax = fig.add_subplot(111)
     p = librosa.display.specshow(x, sr=sr, ax=ax, x_axis='time', y_axis='mel')
     fig.colorbar(p, format='%+2.0f dB')
-    fig.savefig(filepath)
+    fig.savefig(filepath, transparent=True, bbox_inches='tight')
     
