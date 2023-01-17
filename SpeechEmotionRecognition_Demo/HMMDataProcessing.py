@@ -122,7 +122,7 @@ class HMMDataProcessing:
       delta = librosa.feature.delta(mfcc_normalized.T)
       deltadelta = librosa.feature.delta(delta)
       f0, _ , voice_prob = librosa.pyin(processed_x,librosa.note_to_hz('C2'),librosa.note_to_hz('C7'), sr, win_length=int(0.025*sr), hop_length=int(0.01*sr), fill_na=0)
-      reduce_index = np.where(voice_prob > 0.05)[0]
+      reduce_index = np.where(voice_prob > 0.25)[0]
       feature = np.concatenate((mfcc_normalized, delta.T, deltadelta.T, f0.reshape(f0.shape[0], 1), voice_prob.reshape(voice_prob.shape[0], 1)), axis=1)
       feature = np.take(feature, reduce_index, axis=0)
       if (len(x_test) == 0):
