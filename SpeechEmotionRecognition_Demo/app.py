@@ -61,6 +61,7 @@ def melSpectrogram():
   # 3). Check if 
   if ('dataFileName' in request.form and request.form['dataFileName'] != 'null'):
     dataFileName = request.form['dataFileName']
+    dataFileName = dataFileName[:dataFileName.find('.')] + ".wav"
   else:
     errMsg = f"File is not indicated!"
     print('Failed: ' + errMsg)
@@ -233,6 +234,7 @@ def getModelAndData(modelChoice, dataFileName=None):
       hop_length = modelConfig['hop_length']
       win_length = modelConfig['win_length']
       n_mels = modelConfig['n_mels']
+      timeShape = modelConfig['timeShape']
 
       # A). Get Model
       try:
@@ -253,11 +255,12 @@ def getModelAndData(modelChoice, dataFileName=None):
                                   transformByStft=transformByStft,
                                   hop_length=hop_length,
                                   win_length=win_length,
-                                  n_mels=n_mels)
+                                  n_mels=n_mels,
+                                  timeShape=timeShape)
         dataModel.loadAndExtractTestData(app.config['UPLOAD_DIR'], dataFileName=dataFileName)
         dataModel.processData()
       except Exception as e:
-        errMsg = 'Data Processing Failed! ' + e
+        errMsg = 'Data Processing Failed! ' + str(e)
         print('Failed: ' + errMsg)
         return {'data': [], 'status': 'failed', 'errMsg': errMsg}
 
