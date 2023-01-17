@@ -2,7 +2,7 @@
   {
     "name": "Final HMM Model",
     "folderName": "HMM_Final",
-    "labelsToInclude": ["Anger", "Happiness", "Neutral", "Sadness"],
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
 	  "isHMM": 1
   },
   {

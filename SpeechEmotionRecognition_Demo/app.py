@@ -172,7 +172,7 @@ def predict():
       current_index = 0
       result = model.predict_proba(dataModel.x_test)
       for _, count in enumerate(dataModel.count_list):
-        y_percentage = np.array([0,0,0,0])
+        y_percentage = np.array([0,0,0,0,0])
         for i in range(count):
             y_percentage = np.add(y_percentage, result[current_index]/count)
             current_index += 1
