@@ -1,5 +1,5 @@
 numpy==1.23.5
-opencv-python==4.7.0
+opencv-python==4.7.0.68
 tensorflow==2.11.0
 flask==2.2.2
 pydub==0.25.1
