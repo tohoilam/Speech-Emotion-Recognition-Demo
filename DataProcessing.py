@@ -7,9 +7,6 @@ import librosa
 import librosa.display
 import joblib
 import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-# from opensoundscape.audio import Audio
-# from opensoundscape.spectrogram import Spectrogram
 import noisereduce as nr
 import cv2
 
