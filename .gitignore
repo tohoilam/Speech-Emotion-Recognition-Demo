@@ -155,3 +155,5 @@ cython_debug/
 demoData/
 oldDemoData/
 oldStuff/
+static/data/
+static/melSpec/
