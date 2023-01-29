@@ -1,12 +1,13 @@
 const sampleRate = 16000;
-const domain = 'http://127.0.0.1:5000'
+// const domain = 'http://127.0.0.1:5000'
 blobList = [];
 filenameList = [];
 
 jQuery(document).ready(function () {
 	var $ = jQuery;
+	var domain = $('#hostUrl').text();
 
-	$.ajax(domain + '/models', {
+	$.ajax(domain + 'models', {
 		type: 'GET',
 		dataType: 'json',
 	})
@@ -116,7 +117,7 @@ jQuery(document).ready(function () {
 
 		loadScreen(true);
 
-		const url = domain + "/predict";
+		const url = domain + 'predict';
 
 		const modelChoice = $('#model-selection').val();
 		
@@ -332,7 +333,7 @@ jQuery(document).ready(function () {
 			formData.append('modelChoice', modelChoice);
 			formData.append('dataFileName', filename);
 
-			$.ajax(domain + '/mel-spectrogram', {
+			$.ajax(domain + 'mel-spectrogram', {
 				type: 'POST',
 				dataType: 'json',
 				data: formData,

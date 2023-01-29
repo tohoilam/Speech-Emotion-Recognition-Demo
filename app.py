@@ -29,7 +29,7 @@ def too_large(e):
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  return render_template('index.html', hostUrl=request.host_url)
 
 @app.route('/models')
 def models():
