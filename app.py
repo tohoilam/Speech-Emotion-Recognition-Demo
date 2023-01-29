@@ -29,7 +29,8 @@ def too_large(e):
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  print('hi')
+  return render_template('templates/index.html')
 
 @app.route('/models')
 def models():
