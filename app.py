@@ -28,7 +28,7 @@ def too_large(e):
     return "File is too large", 413
 
 @app.route('/')
-def home():
+def index():
   return render_template('index.html')
 
 @app.route('/models')
