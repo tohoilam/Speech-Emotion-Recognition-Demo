@@ -1,2 +1,6 @@
 demoData/
 README.md
+*.mp3
+*.wav
+requirements3.txt
+requirementsAll.txt
