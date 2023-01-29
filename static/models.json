@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Best CNN Model",
+    "folderName": "BestCnnModel.h5",
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
+    "splitDuration": 8,
+    "ignoreDuration": 2,
+    "transformByStft": true,
+    "hop_length": 512,
+    "win_length": 2048,
+    "n_mels": 128,
+    "timeShape": false
+  },
+  {
+    "name": "Final Model (CNN-LSTM)",
+    "folderName": "BestCnnLstmModel.h5",
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
+    "splitDuration": 8,
+    "ignoreDuration": 2,
+    "transformByStft": true,
+    "hop_length": 512,
+    "win_length": 2048,
+    "n_mels": 128,
+    "timeShape": true
+  },
+  {
+    "name": "Final Model on EmoDB (Not effective)",
+    "folderName": "BestCnnLstmEmoDBModel.h5",
+    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
+    "splitDuration": 8,
+    "ignoreDuration": 2,
+    "transformByStft": true,
+    "hop_length": 512,
+    "win_length": 2048,
+    "n_mels": 128,
+    "timeShape": false
+  }
+]

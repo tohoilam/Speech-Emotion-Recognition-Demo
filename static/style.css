@@ -1,0 +1,620 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  background-color: #101010;
+  position: relative
+}
+
+#container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18% 18% 64%;
+  grid-template-rows: 13% 15% 40% 32%;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 10px 40px;
+  z-index: 1;
+}
+
+#model-section {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 1;
+}
+
+#file-upload {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+}
+
+#recording-section {
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
+}
+
+#predict-button-section {
+  grid-column: 1 / span 2;
+  grid-row: 4 / span 1
+}
+
+#audio-section {
+  grid-column: 3 / span 1;
+  grid-row: 2 / span 3;
+}
+
+#loading {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.571);
+}
+
+#loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  margin-top: 45vh;
+  animation: spin 0.7s linear infinite;
+}
+
+#loading[loading-active="False"] {
+  left: -100%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+header {
+  text-align: center;
+  padding-top: 15px;
+  grid-column: 1 / span 3;
+  grid-row: 1 / span 1;
+  font-size: 2.5rem;
+  color: #3c85b6;
+  font-weight: 600;
+}
+
+h1 {
+  color: #3c85b6;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ***************************** A). Model Section ***************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+#model-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+#model-selection {
+  width: 100%;
+  margin: 30px 10px 20px 10px;
+  text-overflow: ellipsis;
+  background-color: rgb(193, 193, 193);
+  border-radius: 20px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ************************** B). File Upload Section ************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+#file-upload {
+  width: 100%;
+  padding: 5px;
+  /* background: #6fe1f5; */
+  border-radius: 5px;
+}
+
+#file-upload #upload-form {
+  height: 167px;
+  display: flex;
+  margin: 20px 0px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 2px dashed #3c85b6;
+}
+
+#file-upload #upload-form i {
+  font-size: 50px;
+  color: #3c85b6;
+}
+
+#file-upload #upload-form p {
+  font-size: 16px;
+  margin-top: 15px;
+  color: #3c85b6;
+}
+
+#file-upload #upload-form[drop-active=True] {
+  border: 2px dashed #8bcbf6;
+}
+
+#file-upload #upload-form[drop-active=True] i {
+  color: #8bcbf6;
+}
+
+#file-upload #upload-form[drop-active=True] p {
+  color: #8bcbf6;
+}
+
+#file-input {
+  position: absolute;
+  left: -100%;
+}
+
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* *************************** C). Recording Section *************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+#recording-control {
+  padding: 5px;
+}
+
+[data-role="controls"] > button {
+  margin: 50px auto;
+  outline: none;
+  display: block;
+  border: none;
+  background-color: #D9AFD9;
+  background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-indent: -100em;
+  cursor: pointer;
+  box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.3) inset,
+      0px 0px 0px 30px rgb(219, 219, 219), 0px 0px 0px 35px #333;
+}
+
+[data-role="controls"] > button:hover {
+  background-color: #ee7bee;
+  background-image: linear-gradient(0deg, #ee7bee 0%, #6fe1f5 100%);
+}
+
+[data-role="controls"] > button[data-recording="true"] {
+  background-color: #ff2038;
+  background-image: linear-gradient(0deg, #ff2038 0%, #b30003 100%);
+}
+
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ************************ D). Predict Button Section ************************* */
+/* ***************************************************************************** */
+#predict-button-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+[data-role="predict-emotion-button"] {
+  background-color: #3c85b6;
+  width: 250px;
+  height: 60px;
+  border-radius: 20px;
+  border: 1px solid #04273e;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #04273e;
+  cursor: pointer;
+}
+
+[data-role="predict-emotion-button"]:hover {
+  background-color: #4d97c7;
+}
+
+[data-role="predict-emotion-button"]:active {
+  background-color: #91cdf6;
+}
+
+#label_image {
+  width: 60%;
+  align-self: flex-start;
+}
+
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ***************************** E). Audio Section ***************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+#audio-section {
+  background-color: #4c474c;
+  background-image: linear-gradient(0deg, #4c474c 0%, #232323 100%);
+  border-radius: 50px;
+  margin: 15px;
+  overflow-y: auto;
+}
+
+[data-role="recordings"] > .audio-row {
+  width: auto;
+  height: auto;
+  margin: 0px 20px;
+  padding: 20px 0px 10px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 10px;
+  border-bottom: 2px solid black;
+}
+
+[data-role="recordings"] > .audio-row audio {
+  outline: none;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+[data-role="recordings"] > .audio-row .audio-name {
+  color: #91cdf6;
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
+}
+
+
+[data-role="recordings"] > .audio-row > a {
+  display: inline-block;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+[data-role="recordings"] > .audio-row > a.download {
+  text-decoration: underline;
+  background-color: #0093E9;
+  background-image: linear-gradient(0deg, #0093E9 0%, #80D0C7 100%);
+}
+
+
+[data-role="recordings"] > .audio-row > a.download:hover {
+  font-size: 1.1rem;
+  background-color: #019bf4;
+  background-image: linear-gradient(0deg, #019bf4 0%, #75ebdd 100%);
+}
+
+[data-role="recordings"] > .audio-row > a.download:active {
+  background-image: linear-gradient(180deg, #0093E9 0%, #80D0C7 100%);
+}
+
+[data-role="recordings"] > .audio-row > a.expand {
+  font-size: 1.8rem;
+  background-color: #00c63c;
+  background-image: linear-gradient(0deg, #00c63c 0%, #79c79f 100%);
+}
+
+
+[data-role="recordings"] > .audio-row > a.expand:hover {
+  font-size: 2rem;
+  background-color: #019bf4;
+  background-image: linear-gradient(0deg, #00d540 0%, #80d2a8 100%);
+}
+
+[data-role="recordings"] > .audio-row > a.expand:active {
+  background-image: linear-gradient(180deg, #00c63c 0%, #79c79f 100%);
+}
+
+[data-role="recordings"] > .audio-row > .emotion-result {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+[data-role="recordings"] > .audio-row li.emotion-container {
+  list-style-type: none;
+  box-sizing: content-box;
+  margin: 0px 5px 20px 5px;
+}
+
+[data-role="recordings"] > .audio-row .emotion-section-result {
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  /* padding: 2px 10px;
+  background-color: #0093E9;
+  background-image: linear-gradient(60deg, #0093E9 0%, #80D0C7 100%); */
+  border-radius: 20px;
+}
+
+[data-role="recordings"] > .audio-row .emotion-section-result > .time {
+  display: inline-block;
+}
+
+[data-role="recordings"] > .audio-row .emotion-section-result > .emotion {
+  display: inline-block;
+}
+
+[data-role="recordings"] > .audio-row  .emotion-percentages {
+  height: 20px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 5px;
+  box-sizing: content-box;
+}
+
+[data-role="recordings"] > .audio-row  .specific-emotion-percentage {
+  height: 100%;
+  text-align: center;
+}
+
+.anger-emotion {
+  background-color: #E61E1E;
+  background-image: linear-gradient(60deg, #E61E1E 0%, #E18F89 100%);
+}
+
+.excitement-emotion {
+  background-color: #EBE300;
+  background-image: linear-gradient(60deg, #EBE300 0%, #CBD080 100%);
+}
+
+.frustration-emotion {
+  background-color: #AD01A7;
+  background-image: linear-gradient(60deg, #AD01A7 0%, #D67AC5 100%);
+}
+
+.happiness-emotion {
+  background-color: #00EB46;
+  background-image: linear-gradient(60deg, #00EB46 0%, #76D0A2 100%);
+}
+
+.neutral-emotion {
+  background-color: #AFBBB5;
+  background-image: linear-gradient(60deg, #AFBBB5 0%, #DAE1DE 100%);
+}
+
+.sadness-emotion {
+  background-color: #0093E9;
+  background-image: linear-gradient(60deg, #0093E9 0%, #80D0C7 100%);
+}
+
+
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* **************************** F). Mel-Spectrogram **************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+#mel-spectrogram-section {
+  position: fixed;
+  display: flex;
+  top: 0px;
+  height: 80vh;
+  width: 90vw;
+  margin: 14vh 5vw 6vh 5vw;
+  z-index: 100;
+  background-color: #052c45;
+  border-radius: 30px;
+  overflow-x: auto;
+}
+
+#mel-spectrogram-section[show="True"] {
+  left: 0%;
+}
+
+#mel-spectrogram-section[show="False"] {
+  left: 100%;
+}
+
+#mel-spectrogram-section #close-mel-spectrogram {
+  position: sticky;
+  left: 20px;
+  top: 20px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: #012945;
+  border: 1px solid #012945;
+  cursor: pointer;
+  background-color: #3c85b6;
+}
+
+#mel-spectrogram-section #close-mel-spectrogram > span {
+  width: 32px;
+  height: 32px;
+  display: block;
+  font-family: sans-serif;
+  padding-top: 4px;
+}
+
+#mel-spectrogram-section #close-mel-spectrogram:hover {
+  background-color: #4d97c7;
+}
+
+#mel-spectrogram-section #close-mel-spectrogram:active {
+  background-color: #91cdf6;
+}
+
+#mel-spectrogram-section .predicted-container {
+  display: inline-block;
+  padding: 20px 30px;
+  height: 100%;
+}
+
+#mel-spectrogram-section .predicted-container .predicted-emotion {
+  color: #91cdf6;
+}
+
+#mel-spectrogram-section .predicted-container .audio-filename {
+  color: rgb(193, 193, 193);
+}
+
+#mel-spectrogram-section .predicted-emotion {
+  text-align: center;
+}
+
+#mel-spectrogram-section .audio-filename {
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+#mel-spectrogram-section .mel-spectrogram-image-container {
+  height: calc(100% - 35px - 34px);;
+}
+
+#mel-spectrogram-section .mel-spectrogram-image-container .mel-spectrogram-image {
+  height: 100%;
+  width: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ************************** Progress Stuff (Backup) ************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* #file-upload .upload-row {
+  background: #e9f0ff;
+  margin-bottom: 10px;
+  list-style: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#file-upload .upload-row i {
+  font-size: 30px;
+  color: #6990f2;
+}
+
+#file-upload .upload-details span {
+  font-size: 14px;
+}
+
+#upload-progress-area .upload-content {
+  width: 100%;
+  margin-left: 15px;
+}
+
+#upload-progress-area .upload-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#upload-progress-area .progress-bar {
+  height: 6px;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 4px;
+  border-radius: 30px;
+}
+
+#upload-progress-area .progress-bar .progress {
+  height: 100%;
+  width: 50%;
+  background: #6990f2;
+  border-radius: inherit;
+}
+
+#uploaded-area {
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+#uploaded-area::-webkit-scrollbar {
+  width: 0px;
+}
+
+#uploaded-area .upload-content {
+  display: flex;
+  align-items: center;
+}
+
+#uploaded-area .upload-details {
+  display: flex;
+  margin-left: 15px;
+  flex-direction: column;
+}
+
+#uploaded-area .upload-details .size {
+  font-size: 11px;
+  color: #404040;
+}
+
+#uploaded-area .fa-check {
+  color: #6990f2;
+  font-size: 16px;
+} */
