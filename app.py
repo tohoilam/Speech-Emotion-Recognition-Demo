@@ -15,7 +15,7 @@ MODEL_PATH = 'models'
 MODEL_CONFIG_PATH = os.path.join('static', 'models.json')
 MEL_SPEC_DIR = os.path.join('static', 'melSpec')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 app.config['MODEL_PATH'] = MODEL_PATH
 app.config['MODEL_CONFIG_PATH'] = MODEL_CONFIG_PATH
