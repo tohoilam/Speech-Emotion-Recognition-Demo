@@ -39,7 +39,7 @@ noisereduce==2.0.1
 numba==0.56.4
 numpy==1.23.5
 oauthlib==3.2.2
-opencv-python==4.7.0.68
+opencv-python-headless==4.7.0.68
 opt-einsum==3.3.0
 packaging==23.0
 Pillow==9.4.0
