@@ -155,4 +155,3 @@ cython_debug/
 demoData/
 oldDemoData/
 oldStuff/
-static/ffmpeg/

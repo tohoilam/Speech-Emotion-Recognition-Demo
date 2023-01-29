@@ -1,6 +1,4 @@
 import os
-import sys
-sys.path.append(os.path.join('static', 'ffmpeg'))
 import shutil
 import json
 import cv2
