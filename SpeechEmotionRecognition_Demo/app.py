@@ -1,14 +1,16 @@
 import os
+import sys
+sys.path.append(os.path.join('static', 'ffmpeg'))
 import shutil
 import json
 import cv2
 import numpy as np
 import tensorflow as tf
-from pomegranate import *
+# from pomegranate import *
 from flask import Flask, request, render_template
 
 from DataProcessing import DataProcessing
-from HMMDataProcessing import HMMDataProcessing
+# from HMMDataProcessing import HMMDataProcessing
 
 UPLOAD_DIR = os.path.join('static', 'data')
 MODEL_PATH = 'models'
@@ -151,37 +153,37 @@ def predict():
 
   # 4). A: Get Model Choice and Configure Model; B: Load and Process data
   modelChoice = int(request.form['modelChoice'])
-  print(modelChoice)
-  if ((modelListConfig != None) & (modelListConfig[modelChoice]["isHMM"] == 0)):
+  # print(modelChoice)
+  if (modelListConfig != None):
     model, dataModel = getModelAndData(modelChoice)
-  elif ((modelListConfig != None) & (modelListConfig[modelChoice]["isHMM"] == 1)):
-    model, dataModel = getHMMAndData(modelChoice)  
+  # elif ((modelListConfig != None) & (modelListConfig[modelChoice]["isHMM"] == 1)):
+  #   model, dataModel = getHMMAndData(modelChoice)  
   # 5). Model Prediction
-  if (modelListConfig[modelChoice]["isHMM"] == 0):
-    try:
-      y_percentages = model.predict(dataModel.x_test)
-      y_pred = np.argmax(y_percentages, axis=1)
-    except Exception as e:
-      errMsg = 'Emotion Prediction from Model Failed! ' + e
-      print('Failed: ' + errMsg)
-      return {'data': [], 'status': 'failed', 'errMsg': errMsg}
-  elif (modelListConfig[modelChoice]["isHMM"] == 1):
-    try:
-      y_percentages = []
-      y_pred = []
-      current_index = 0
-      result = model.predict_proba(dataModel.x_test)
-      for _, count in enumerate(dataModel.count_list):
-        y_percentage = np.array([0,0,0,0,0])
-        for i in range(count):
-            y_percentage = np.add(y_percentage, result[current_index]/count)
-            current_index += 1
-        y_percentages.append(y_percentage)
-        y_pred.append(np.argmax(y_percentage))    
-    except Exception as e:
-      errMsg = 'Emotion Prediction from Model Failed! ' + e
-      print('Failed: ' + errMsg)
-      return {'data': [], 'status': 'failed', 'errMsg': errMsg}
+  # if (modelListConfig[modelChoice]["isHMM"] == 0):
+  try:
+    y_percentages = model.predict(dataModel.x_test)
+    y_pred = np.argmax(y_percentages, axis=1)
+  except Exception as e:
+    errMsg = 'Emotion Prediction from Model Failed! ' + e
+    print('Failed: ' + errMsg)
+    return {'data': [], 'status': 'failed', 'errMsg': errMsg}
+  # elif (modelListConfig[modelChoice]["isHMM"] == 1):
+  #   try:
+  #     y_percentages = []
+  #     y_pred = []
+  #     current_index = 0
+  #     result = model.predict_proba(dataModel.x_test)
+  #     for _, count in enumerate(dataModel.count_list):
+  #       y_percentage = np.array([0,0,0,0,0])
+  #       for i in range(count):
+  #           y_percentage = np.add(y_percentage, result[current_index]/count)
+  #           current_index += 1
+  #       y_percentages.append(y_percentage)
+  #       y_pred.append(np.argmax(y_percentage))    
+  #   except Exception as e:
+  #     errMsg = 'Emotion Prediction from Model Failed! ' + e
+  #     print('Failed: ' + errMsg)
+  #     return {'data': [], 'status': 'failed', 'errMsg': errMsg}
   print('Result Predicted!')
   
   print(y_percentages)
@@ -274,47 +276,47 @@ def getModelAndData(modelChoice, dataFileName=None):
     print('Failed: ' + errMsg)
     return {'data': [], 'status': 'failed', 'errMsg': errMsg}
 
-def getHMMAndData(modelChoice, dataFileName=None):
-  global modelListConfig
-  if (modelListConfig != None):
-    if (modelChoice < len(modelListConfig)):
-      modelConfig = modelListConfig[modelChoice]
-      modelName = modelConfig['name']
-      folderName = modelConfig['folderName']
-      labelsToInclude = modelConfig['labelsToInclude']
+# def getHMMAndData(modelChoice, dataFileName=None):
+#   global modelListConfig
+#   if (modelListConfig != None):
+#     if (modelChoice < len(modelListConfig)):
+#       modelConfig = modelListConfig[modelChoice]
+#       modelName = modelConfig['name']
+#       folderName = modelConfig['folderName']
+#       labelsToInclude = modelConfig['labelsToInclude']
 
-      # A). Get Model
-      try:
-        print(f"Loading Model {modelName} from {app.config['MODEL_PATH']}/{folderName}...")
-        modelDir = os.path.join(os.getcwd(), app.config['MODEL_PATH'], folderName, "model.json")
-        with open(modelDir, 'r') as openfile:
-            json_object = json.load(openfile)
-        model = HiddenMarkovModel.from_json(json_object)
-        print('   Model Loading Completed!')
-      except Exception as e:
-        errMsg = f"Loading model '{modelName}' Failed! " + e
-        print('Failed: ' + errMsg)
-        return {'data': [], 'status': 'failed', 'errMsg': errMsg}
+#       # A). Get Model
+#       try:
+#         print(f"Loading Model {modelName} from {app.config['MODEL_PATH']}/{folderName}...")
+#         modelDir = os.path.join(os.getcwd(), app.config['MODEL_PATH'], folderName, "model.json")
+#         with open(modelDir, 'r') as openfile:
+#             json_object = json.load(openfile)
+#         model = HiddenMarkovModel.from_json(json_object)
+#         print('   Model Loading Completed!')
+#       except Exception as e:
+#         errMsg = f"Loading model '{modelName}' Failed! " + e
+#         print('Failed: ' + errMsg)
+#         return {'data': [], 'status': 'failed', 'errMsg': errMsg}
       
-      # B). Get Data Model
-      try:
-        dataModel = HMMDataProcessing(labelsToInclude=labelsToInclude)
-        dataModel.loadAndExtractTestData(app.config['UPLOAD_DIR'], dataFileName=dataFileName)
-        dataModel.processData()
-      except Exception as e:
-        errMsg = 'Data Processing Failed! ' + e
-        print('Failed: ' + errMsg)
-        return {'data': [], 'status': 'failed', 'errMsg': errMsg}
+#       # B). Get Data Model
+#       try:
+#         dataModel = HMMDataProcessing(labelsToInclude=labelsToInclude)
+#         dataModel.loadAndExtractTestData(app.config['UPLOAD_DIR'], dataFileName=dataFileName)
+#         dataModel.processData()
+#       except Exception as e:
+#         errMsg = 'Data Processing Failed! ' + e
+#         print('Failed: ' + errMsg)
+#         return {'data': [], 'status': 'failed', 'errMsg': errMsg}
 
-      return model, dataModel
-    else:
-      errMsg = 'Selected model not available in backed!'
-      print('Failed: ' + errMsg)
-      return {'data': [], 'status': 'failed', 'errMsg': errMsg}
-  else:
-    errMsg = 'modelListConfig variables not initialize in backend'
-    print('Failed: ' + errMsg)
-    return {'data': [], 'status': 'failed', 'errMsg': errMsg}
+#       return model, dataModel
+#     else:
+#       errMsg = 'Selected model not available in backed!'
+#       print('Failed: ' + errMsg)
+#       return {'data': [], 'status': 'failed', 'errMsg': errMsg}
+#   else:
+#     errMsg = 'modelListConfig variables not initialize in backend'
+#     print('Failed: ' + errMsg)
+#     return {'data': [], 'status': 'failed', 'errMsg': errMsg}
 
 if __name__ == "__main__":
   app.run()

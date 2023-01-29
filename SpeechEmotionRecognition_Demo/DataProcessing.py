@@ -1,4 +1,7 @@
 import os
+import sys
+sys.path.append(os.path.join('static', 'ffmpeg'))
+import ffprobe
 import numpy as np
 import tensorflow as tf
 from pydub import AudioSegment, effects

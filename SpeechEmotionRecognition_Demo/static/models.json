@@ -1,11 +1,5 @@
 [
   {
-    "name": "Final HMM Model",
-    "folderName": "HMM_Final",
-    "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
-	  "isHMM": 1
-  },
-  {
     "name": "Best CNN Model",
     "folderName": "BestCnnModel.h5",
     "labelsToInclude": ["Anger", "Frustration", "Happiness", "Neutral", "Sadness"],
@@ -15,8 +9,7 @@
     "hop_length": 512,
     "win_length": 2048,
     "n_mels": 128,
-    "timeShape": false,
-	  "isHMM": 0
+    "timeShape": false
   },
   {
     "name": "Final Model (CNN-LSTM)",
@@ -28,8 +21,7 @@
     "hop_length": 512,
     "win_length": 2048,
     "n_mels": 128,
-    "timeShape": true,
-	  "isHMM": 0
+    "timeShape": true
   },
   {
     "name": "Final Model on EmoDB (Not effective)",
@@ -41,7 +33,6 @@
     "hop_length": 512,
     "win_length": 2048,
     "n_mels": 128,
-    "timeShape": false,
-	  "isHMM": 0
+    "timeShape": false
   }
 ]
