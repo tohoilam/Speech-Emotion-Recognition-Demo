@@ -29,7 +29,14 @@ def too_large(e):
 
 @app.route('/')
 def index():
-  return render_template('index.html', hostUrl=request.host_url)
+  with open(app.config['MODEL_CONFIG_PATH'], 'r') as f:
+    global modelListConfig
+    modelListConfig = json.load(f)
+
+  url = request.host_url
+  if url[4] != 's':
+    url = url[:4] + 's' + url[4:]
+  return render_template('index.html', hostUrl=url)
 
 @app.route('/models')
 def models():
@@ -317,4 +324,5 @@ def getModelAndData(modelChoice, dataFileName=None):
 #     return {'data': [], 'status': 'failed', 'errMsg': errMsg}
 
 if __name__ == "__main__":
-  app.run()
+	port = int(os.environ.get('PORT', 5000))
+	app.run(host='0.0.0.0', port=port)

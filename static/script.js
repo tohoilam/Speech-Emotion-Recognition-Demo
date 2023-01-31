@@ -7,23 +7,28 @@ jQuery(document).ready(function () {
 	var $ = jQuery;
 	var domain = $('#hostUrl').text();
 
-	$.ajax(domain + 'models', {
-		type: 'GET',
-		dataType: 'json',
-	})
-	.done((response) => {
-		if (response && response.data && response.data.length > 0) {
-			response.data.forEach(data => {
-				let optionObject = $(`<option value=${data.id}>${data.name}</option>`);
-				$('#model-selection').append(optionObject);
-			})
-		}
-	})
-	.fail((xhr, textStatus, errorThrown) => {
-		let errMsg = 'Failed retrieving models from backend. Error: ' + xhr.responseText;
-		console.log(errMsg);
-		alert(errMsg);
-	});
+	// $.ajax(domain + 'models', {
+	// 	type: 'GET',
+	// 	dataType: 'json',
+	// })
+	// .done((response) => {
+	// 	if (response && response.data && response.data.length > 0) {
+	// 		response.data.forEach(data => {
+	// 			let optionObject = $(`<option value=${data.id}>${data.name}</option>`);
+	// 			$('#model-selection').append(optionObject);
+	// 		})
+	// 	}
+	// })
+	// .fail((xhr, textStatus, errorThrown) => {
+	// 	let errMsg = 'Failed retrieving models from backend. Error: ' + xhr.responseText;
+	// 	console.log(errMsg);
+	// 	alert(errMsg);
+	// });
+
+	let option1Object = $(`<option value=0>Best CNN Model</option>`);
+	$('#model-selection').append(option1Object);
+	let option2Object = $(`<option value=1>Final Model (CNN-LSTM)</option>`);
+	$('#model-selection').append(option2Object);
 
 	var myRecorder = {
 		objects: {
